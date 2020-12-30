@@ -28,18 +28,16 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-      
-      - uses: actions/upload-artifact@master
-        with:
+    
+  test:
     needs: build
-          path: public/
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-2016]
-        node-version: [12.x, 14.x]
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/upload-artifact@master
+      with:
+        name: webpack artifacts
+        path: public
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
